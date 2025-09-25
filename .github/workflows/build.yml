@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           submodules: recursive
 
       - name: Setup Python
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v6.0.0
         with:
-          python-version: "3.13.5"
+          python-version: "3.13.7"
       - name: Install uv
-        uses: astral-sh/setup-uv@v6.4.3
+        uses: astral-sh/setup-uv@v6.7.0
       - name: Install Python dependencies
         run: |
           uv tool install meson
@@ -39,7 +39,7 @@ jobs:
           sudo apt install -y cmake glslang-dev shaderc vulkan-headers
 
       - name: Checkout SPIRV
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           repository: KhronosGroup/SPIRV-Cross
           ref: sdk-1.3.236.0
@@ -54,7 +54,7 @@ jobs:
           sudo $(which ninja) -Cbuild install
 
       - name: Checkout VapourSynth
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           repository: vapoursynth/vapoursynth
           ref: R68
@@ -95,7 +95,7 @@ jobs:
         shell: msys2 {0}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: recursive
       - name: Setup MSYS2
@@ -123,7 +123,7 @@ jobs:
           meson setup build --buildtype release --prefer-static --default-library=static -Dcpp_link_args='-static' -Dlibplacebo:demos=false -Dlibplacebo:glslang=enabled
           meson compile -vC build
       - name: Attest build provenance
-        uses: actions/attest-build-provenance@v2.4.0
+        uses: actions/attest-build-provenance@v3.0.0
         if: ${{ github.event_name == 'push' }}
         with:
           subject-path: build/libvs_placebo.dll
@@ -139,7 +139,7 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
         with:
           submodules: recursive
       - uses: docker/setup-qemu-action@v3.6.0
